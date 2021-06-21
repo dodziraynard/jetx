@@ -42,13 +42,16 @@ class Schedule(models.Model):
     created_at = models.DateTimeField(default=now)
     active = models.BooleanField(default=True)
 
+    def available_capacity(self):
+        return self.bus.capacity - self.bookings.count() 
+
     def __repr__(self) -> str:
             return f"{self.source.name} to {self.destination.name}"
 
 class Booking(models.Model):
     payment = models.ForeignKey(Payment, null=True, blank=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="bookings")
     created_at = models.DateTimeField(default=now)
 
     def __repr__(self) -> str:
