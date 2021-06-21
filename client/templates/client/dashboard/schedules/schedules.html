@@ -1,0 +1,73 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Schedules{% endblock %}
+{% block active_sidebar %}schedules{% endblock %}
+
+{% block content %}
+<h4>Schedules</h4>
+<div class="link-nav">
+    <a href="/">Home &ThinSpace;</a>
+    <a>> All Schedules</a>
+</div>
+<br>
+
+<div class="bg-white col-md-12 rounded p-1">
+    <h5 class="ml-4">All Schedule Data </h5>
+    {% if request.error_message %}
+    <div class="col-md-7 mx-auto alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> {{request.error_message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    {% if request.message %}
+    <div class="col-md-7 mx-auto alert alert-info alert-dismissible fade show" role="alert">
+        <strong>Info!</strong> {{request.message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    <div style="width: 70vw; overflow-x: auto; margin: auto;">
+        <table class="table display table-striped">
+            <thead>
+                <tr>
+                    <th>Actions</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure Date</th>
+                    <th>ETA</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if schedules %} 
+                    {% for schedule in schedules %}
+                    <tr>
+                    <td>
+                        <div class="flex">
+                            <a class="badge badge-primary text text-white" href="{% url 'client:make_payment' schedule.id %}">
+                                <i class="bi bi-pencil"></i> Book Now
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{schedule.source.name}}</td>
+                    <td>{{schedule.destination.name}}</td>
+                    <td>{{schedule.departure_time}}</td>
+                    <td>{{schedule.eta}}</td>
+                    <td>{{schedule.created_at}}</td>
+                    </tr>
+                    {% endfor %} 
+                {% else %}
+                    <tr>
+                        <td><p class="text text-info">No schedules found.</p></td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

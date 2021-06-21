@@ -1,0 +1,85 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Notification{% endblock %}
+{% block active_sidebar %}notifications{% endblock %}
+
+
+{% block content %}
+<h4>Notification</h4>
+<div class="link-nav">
+    <a href="{% url 'dashboard:index' %}">Home &ThinSpace;</a>
+    <a>>Store Notification Info</a>
+</div>
+<br>
+
+<div class="bg-white col-md-12 rounded p-1">
+    <header class="p-2 d-flex justify-content-between">
+        <h6><i class="bi bi-list-stars"></i> Store Notification Info</h6>
+    </header>
+
+    <form action="{% url 'dashboard:store_notification' %}" class="needs-validation" method="POST" enctype="multipart/form-data" novalidate>
+        {% if error_message %}
+        <div class="col-md-7 mx-auto alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> {{error_message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        {% csrf_token %}
+
+        <input type="hidden" name="id" value="{{id}}">
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="name">Notification Category</label>
+                    <select class="form-control" name="category" id="category" required>
+                        <option value="users" {% if category == 'users' %} selected {% endif %}>Users</option>
+                        <option value="admins" {% if category == 'admins' %} selected {% endif %}>Admins</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="name">Message</label>
+                    <textarea class="form-control" placeholder="Message" name="message" id="message" cols="30" rows="5" required>{{message}}</textarea>
+                    <div class="invalid-feedback">Message is required.</div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <p class="text text-right">
+            <button class="btn btn-info" type="submit">Submit</button>
+        </p>
+    </form>
+</div>
+{% endblock %}
+
+<!-- Validation script -->
+{% block scripts %}
+{% load static %}
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+{% endblock %}

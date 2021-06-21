@@ -1,0 +1,76 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Notification{% endblock %}
+{% block active_sidebar %}notifications{% endblock %}
+
+{% block content %}
+<h4>Notification</h4>
+<div class="link-nav">
+    <a href="/">Home &ThinSpace;</a>
+    <a>> All Notification</a>
+</div>
+<br>
+
+<div class="bg-white col-md-12 rounded p-1">
+    <h5 class="ml-4">All Location Data </h5>
+    {% if request.error_message %}
+    <div class="col-md-7 mx-auto alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> {{request.error_message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    {% if request.message %}
+    <div class="col-md-7 mx-auto alert alert-info alert-dismissible fade show" role="alert">
+        <strong>Info!</strong> {{request.message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    <div style="width: 70vw; overflow-x: auto; margin: auto;">
+        <table class="table display table-striped">
+            <thead>
+                <tr>
+                    <th>Actions</th>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Message</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if notifications %} 
+                    {% for notification in notifications %}
+                    <tr>
+                    <td>
+                        <div class="flex">
+                            <a class="badge badge-primary text text-white" href="{% url 'dashboard:edit_notification' notification.id %}">
+                                <i class="bi bi-pencil"></i> 
+                            </a>
+                            <form class="inline row confirmation-form" action="{% url 'dashboard:delete_notification' notification.id %}" method="post">
+                                {% csrf_token %}
+                                <input name="id" type="hidden" value="notification.id">
+                                <button class="mx-1 badge badge-danger text text-white" type="submit"><i class="bi bi-trash"></i> </button>
+                            </form>
+                        </div>
+                    </td>
+                    <td>{{notification.id}}</td>
+                    <td>{{notification.category}}</td>
+                    <td>{{notification.message}}</td>
+                    <td>{{notification.created_at}}</td>
+                    </tr>
+                    {% endfor %} 
+                {% else %}
+                    <tr>
+                        <td><p class="text text-info">No notifications found.</p></td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

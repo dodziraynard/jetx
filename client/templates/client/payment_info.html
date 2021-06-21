@@ -1,0 +1,36 @@
+{% extends 'client/base_template.html' %} {% block content %}
+<br />
+<br />
+<div class="m-3">
+  <h1 class="text-center text-white">NEED A RIDE?</h1>
+  <h3 class="text-center text-white">Welcome to JetX!</h3>
+</div>
+
+<div class="mt-4 flex justify-center" id="">
+  <div class="sm:w-10/12 md:w-4/12 bg-glass p-6 mx-3 rounded-lg">
+    <p class="text text-center">
+      <span class="px-4 py-3 rounded bg-green-500">Success!</span>
+    </p>
+
+    <div class="my-3">
+      <p>
+        Payment completed succesfully. You'll receive an email notification with
+        the details of your schedule.
+      </p>
+    </div>
+
+    <a href="{% url 'client:index' %}" class="form-group">
+      <button
+        type="submit"
+        class="bg-purple-700 text-white px-4 py-3 rounded font-large w-full"
+      >
+        Home
+      </button>
+    </a>
+  </div>
+</div>
+
+<br />
+<br />
+
+{% endblock %}

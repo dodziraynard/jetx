@@ -1,0 +1,101 @@
+{% extends 'account/base_template.html' %} {% block content %}
+
+<div class="m-3">
+  <h2 class="text-center text-white">Register for free!</h2>
+</div>
+<div class="mt-4 flex justify-center">
+  <div class="sm:w-10/12 md:w-4/12 bg-white p-6 rounded-lg">
+    <h3 class="mb-3 text text-center">Fill the form to register.</h3>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          class="form-control"
+          pattern="[a-zA-Z]{2,30}"
+          value="{{username}}"
+          title="At least 3 aphabets"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="full_name">Full Name</label>
+        <input
+          type="text"
+          name="full_name"
+          id="full_name"
+          pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)"
+          placeholder="Surname and other names"
+          class="form-control"
+          value="{{full_name}}"
+          title="Please enter surname and other names"
+          required
+        />
+      </div>
+
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          class="form-control"
+          value="{{email}}"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+          class="form-control"
+          value="{{password}}"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contifrm Pasword</label>
+        <input
+          type="password"
+          name="password_confirmation"
+          id="password"
+          placeholder="Confirm password"
+          class="form-control"
+          value="{{password_confirmation}}"
+          required
+        />
+      </div>
+
+      <div class="form-group mt-5">
+        <button
+          type="submit"
+          class="btn btn-primary text-white px-4 rounded font-medium w-full"
+        >
+          Regiser
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="my-4 theme-trans">
+  <p class="text text-center">
+    Already have an account? Login
+    <a class="text-blue-500" href="{% url 'account:login' %}">here</a>
+  </p>
+</div>
+
+{% endblock %}

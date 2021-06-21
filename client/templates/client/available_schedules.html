@@ -1,0 +1,34 @@
+{% extends 'client/base_template.html' %}
+
+{% block content %}
+<br>
+<br>
+<div class="m-3">
+    <h1 class="text-center text-white">NEED A RIDE?</h1>
+    <h3 class="text-center text-white">Welcome to JetX!</h3>
+</div>
+
+<div class="mt-4 flex justify-center" id="">
+    <div class="sm:w-11/12 md:w-4/12 bg-glass p-6 rounded-lg">                    
+        {% if schedules %}
+        <h5 class="text text-center text-purple-100">Schedules From {{from.name}} to {{to.name}}</h5>
+
+        {% for schedule in schedules %}
+        <a href="{% url 'client:schedule_details' schedule.id %}">
+            <div class="p-2 my-1 hover:bg-purple-700 bg-glass">
+                <p class="m-1">{{schedule.departure_time}}, GHC{{schedule.price}}</p>
+                <p class="m-1">Bus capacity: {{schedule.bus.capacity}}</p>
+                <p class="m-1">Available capacity: {{schedule.bus.available_capacity}}</p>
+            </div>
+        </a>
+        {% endfor %}
+        {% else %}
+        <p>No schedules for the selected locations</p>
+        {% endif %}
+    </div>
+</div>
+
+<br>
+<br>
+
+{% endblock %}

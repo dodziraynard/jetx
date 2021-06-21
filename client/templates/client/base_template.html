@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JetX</title>
+
+    {% load static %}
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/jetx.png' %}"
+      type="image/*"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" />
+
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static '/css/client_style.css' %}" />
+  </head>
+  <body>
+    <div id="client-content">
+      <nav>
+        <ul>
+          <li><a href="{% url 'client:index' %}">Home</a></li>
+
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+          {% else %}
+          <li><a href="{% url 'account:login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+
+      {% block content %} {% endblock %}
+
+    </div>
+    
+    <footer>
+      <div class="mb-5 grid sm:grid-cols-12 gap-4 md:grid-cols-3">
+          <div class="mb-5">
+              <h4 class="mb-2">ABOUT US</h4>
+              <p>JetX is a privately owned comapny that provides top-notch transportation services. </p>
+          </div>
+          <div class="mb-5">
+              <h4 class="mb-2">NEED HELP?</h4>
+              <p>Contact us via phone or email: </p>
+              <p>+233 249 111 222</p>
+              <p>suport@transfer.com</p>
+          </div>
+          <div class="mb-5">
+              <h4 class="mb-2">OUR NEWSLETTER</h4>
+              <form action="" class="flex justify-between" method="POST">
+                  <input type="email" placeholder="Your email" name="email" id="email" class="bg-glass border-2 w-full p-1 rounded-lg">
+                  <button class="ml-4 btn brightness-50">Subscribe</button>
+              </form>
+          </div>
+          <!-- ... -->
+        </div>
+      <hr>
+      <p class="my-3">Copyright 2021, JetX. All rights reserved.</p>
+  </footer>
+
+  <script src="{% static 'js/client_app.js' %}"></script>
+  </body>
+</html>

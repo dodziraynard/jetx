@@ -1,0 +1,69 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Bookings{% endblock %}
+{% block active_sidebar %}bookings{% endblock %}
+
+{% block content %}
+<h4>Bookings</h4>
+<div class="link-nav">
+    <a href="/">Home &ThinSpace;</a>
+    <a>> All Bookings</a>
+</div>
+<br>
+
+<div class="bg-white col-md-12 rounded p-1">
+    <h5 class="ml-4">All Booking Data </h5>
+    {% if request.error_message %}
+    <div class="col-md-7 mx-auto alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> {{request.error_message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    {% if request.message %}
+    <div class="col-md-7 mx-auto alert alert-info alert-dismissible fade show" role="alert">
+        <strong>Info!</strong> {{request.message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    <div style="width: 70vw; overflow-x: auto; margin: auto;">
+        <table class="table display table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure Date</th>
+                    <th>ETA</th>
+                    <th>User</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if bookings %} 
+                    {% for booking in bookings %}
+                    <tr>
+                    <td>{{booking.id}}</td>
+                    <td>{{booking.schedule.source.name}}</td>
+                    <td>{{booking.schedule.destination.name}}</td>
+                    <td>{{booking.schedule.departure_time}}</td>
+                    <td>{{booking.schedule.eta}}</td>
+                    <td>{{booking.user.first_name}} {{booking.user.last_name}}</td>
+                    <td>{{booking.created_at}}</td>
+                    </tr>
+                    {% endfor %} 
+                {% else %}
+                    <tr>
+                        <td><p class="text text-info">No bookings found.</p></td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

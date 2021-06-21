@@ -1,0 +1,54 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block active_sidebar %}dashboard{% endblock %}
+
+
+{% block content %}
+<!-- Admin Dashboard -->
+<h4>Client Dashboard</h4>
+<div class="link-nav">
+    <a href="">Home &ThinSpace;</a>
+</div>
+<br>
+
+<!-- Quick Statistics -->
+<div class="stat-container">
+
+    <div class="bg-white d-flex justify-content-between p-4">
+        <div class="">
+            <div class="stat-icon bg-warning-light">
+                <i class="text text-warning bi bi-house"></i>
+            </div>
+        </div>
+        <div>
+            <p class="text text-muted text-right">Schedule</p>
+            <p class="text text-right"><strong>{{schedules.count}}</strong></p>
+        </div>
+    </div>
+
+    <div class="bg-white d-flex justify-content-between p-4">
+        <div class="">
+            <div class="stat-icon bg-primary-light">
+                <i class="text text-primary bi bi-people"></i>
+            </div>
+        </div>
+        <div>
+            <p class="text text-muted text-right">Bookings</p>
+            <p class="text text-right"><strong>{{bookings.count}}</strong></p>
+        </div>
+    </div>
+
+    <div class="bg-white d-flex justify-content-between p-4">
+        <div class="">
+            <div class="stat-icon bg-danger-light">
+                <i class="text text-danger bi bi-building"></i>
+            </div>
+        </div>
+        <div>
+            <p class="text text-muted text-right">Payment History</p>
+            <p class="text text-right"><strong>{{payments.count}}</strong></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

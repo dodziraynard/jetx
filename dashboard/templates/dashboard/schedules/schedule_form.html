@@ -1,0 +1,141 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Schedule{% endblock %}
+{% block active_sidebar %}schedules{% endblock %}
+
+
+{% block content %}
+<h4>Schedule</h4>
+<div class="link-nav">
+    <a href="{% url 'dashboard:index' %}">Home &ThinSpace;</a>
+    <a>>Store Schedule Info</a>
+</div>
+<br>
+
+<div class="bg-white col-md-12 rounded p-1">
+    <header class="p-2 d-flex justify-content-between">
+        <h6><i class="bi bi-list-stars"></i> Store Schedule Info</h6>
+    </header>
+
+    <form action="{% url 'dashboard:store_schedule' %}" class="needs-validation" method="POST" novalidate>
+        {% if error_message %}
+        <div class="col-md-7 mx-auto alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> {{error_message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        {% csrf_token %}
+
+        <input type="hidden" name="id" value="{{schedule.id}}">
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="number">From</label>
+                    <select class="form-control" name="source" id="source" required>
+                        <option value="">--- Select ---</option>
+                        {% for location in locations %}
+                            <option value="{{location.id}}" {% if location == schedule.source %} selected {% endif %}>{{location.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">Please select location.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="number">To</label>
+                    <select class="form-control" name="destination" id="destination" required>
+                        <option value="">--- Select ---</option>
+                        {% for location in locations %}
+                            <option value="{{location.id}}" {% if location == schedule.destination %} selected {% endif %}>{{location.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">Please select location.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="name">Price in GHC</label>
+                    <input value="{{schedule.price}}" type="number" id="price" class="form-control"
+                        placeholder="E.g., 2" name="price" " required>
+                    <div class="invalid-feedback">Price is required.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="number">Departure Time</label>
+                    <input value="{{schedule.departure_time|date:'c'}}" type="datetime-local" id="departure_time" class="js-update-date form-control" name="departure_time" required>
+                    <div class="invalid-feedback">Departure time is required.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="number">Estimated Time of Arrival (ETA)</label>
+                    <input value="{{schedule.eta|date:'c'}}" type="datetime-local" id="eta" class="js-update-date form-control" name="eta" required>
+                    <div class="invalid-feedback">ETA is required.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="number">Bus</label>
+                    <select class="form-control" name="bus" id="bus" required>
+                        <option value="">--- Select ---</option>
+                        {% for bus in buses %}
+                            <option value="{{bus.id}}" {% if bus == schedule.bus %} selected {% endif %}>{{bus.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">Please select location.</div>
+                </div>
+            </div>
+        </div>
+
+
+        <p class="text text-right">
+            <button class="btn btn-info" type="submit">Submit</button>
+        </p>
+    </form>
+</div>
+{% endblock %}
+
+<!-- Validation script -->
+{% block scripts %}
+{% load static %}
+<script src="{% static 'js/student_app.js' %}"></script>
+
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+{% endblock %}

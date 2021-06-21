@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/jetx.png' %}"
+      type="image/*"
+    />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" />
+
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static '/css/dashboard_style.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/dashboard_style_res.css' %}" />
+    {% block stylesheets %}{% endblock %}
+
+    <title>JetX | {% block title %}Dashboard{% endblock %}</title>
+  </head>
+
+  <body>
+    <div id="page-container">
+      <div id="sidebar" data-active="{% block active_sidebar %}{% endblock %}">
+        <div id="header">
+          <div class="logo">
+            <a href="{% url 'client:index' %}">
+              <img
+                src="{% static 'images/jetx.png' %}"
+                alt="logo"
+                style="height: 50px"
+              />
+            </a>
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="side-bar-item" id="dashboard">
+            <a href="{% url 'dashboard:index' %}">
+              <div class="item">
+                <div class="icon"><i class="bi bi-speedometer2"></i></div>
+                <div class="title">Dashboard</div>
+              </div>
+            </a>
+          </div>
+
+          {% if request.user.is_staff %}
+          <div class="side-bar-item" id="locations">
+            <div class="item">
+              <div class="icon mr-2"><i class="bi bi-diagram-2"></i></div>
+              <div class="title"><a>Locations</a></div>
+              <div class="drop-icon"><i class="bi bi-chevron-right"></i></div>
+            </div>
+            <div class="drop-down">
+              <a href="{% url 'dashboard:locations' %}">
+                <div class="drop-item">
+                  <i class="bi bi-caret-right"></i> All Locations
+                </div>
+              </a>
+              <a href="{% url 'dashboard:store_location' %}">
+                <div class="drop-item">
+                  <i class="bi bi-caret-right"></i> New Location
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="side-bar-item" id="buses">
+            <div class="item">
+              <div class="icon mr-2"><i class="bi bi-people"></i></div>
+              <div class="title"><a>Buses</a></div>
+              <div class="drop-icon"><i class="bi bi-chevron-right"></i></div>
+            </div>
+            <div class="drop-down">
+              <a href="{% url 'dashboard:buses' %}">
+                <div class="drop-item">
+                  <i class="bi bi-caret-right"></i> All Buses
+                </div>
+              </a>
+              <a href="{% url 'dashboard:store_bus' %}">
+                <div class="drop-item">
+                  <i class="bi bi-caret-right"></i> New Bus
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="side-bar-item" id="schedules">
+            <div class="item">
+              <div class="icon mr-2"><i class="bi bi-house"></i></div>
+              <div class="title"><a>Schedules</a></div>
+              <div class="drop-icon"><i class="bi bi-chevron-right"></i></div>
+            </div>
+            <div class="drop-down">
+              <a href="{% url 'dashboard:schedules' %}">
+                <div class="drop-item">
+                  <i class="bi bi-caret-right"></i> All Schedules
+                </div>
+              </a>
+              <a href="{% url 'dashboard:store_schedule' %}">
+                <div class="drop-item">
+                  <i class="bi bi-caret-right"></i> New Schedule
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="side-bar-item" id="notifications">
+            <div class="item">
+              <div class="icon mr-2"><i class="bi bi-house"></i></div>
+              <div class="title"><a>Notifications</a></div>
+              <div class="drop-icon"><i class="bi bi-chevron-right"></i></div>
+            </div>
+            <div class="drop-down">
+              <a href="{% url 'dashboard:notifications' %}">
+                <div class="drop-item">
+                  <i class="bi bi-caret-right"></i> All Notifications
+                </div>
+              </a>
+              <a href="{% url 'dashboard:store_notification' %}">
+                <div class="drop-item">
+                  <i class="bi bi-caret-right"></i> New Notification
+                </div>
+              </a>
+            </div>
+          </div>
+          {% else %}
+
+          <div class="side-bar-item" is="payments">
+            <a href="{% url 'dashboard:schedules' %}">
+              <div class="item">
+                <div class="icon mr-2"><i class="bi bi-house"></i></div>
+                <div class="title">All Schedules</div>
+              </div>
+            </a>
+          </div>
+
+          {% endif %}
+
+
+          <div class="side-bar-item" is="payments">
+            <a href="{% url 'dashboard:payments' %}">
+              <div class="item">
+                <div class="icon mr-2"><i class="bi bi-patch-check"></i></div>
+                <div class="title">Payments</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="side-bar-item" is="bookings">
+            <a href="{% url 'dashboard:bookings' %}">
+              <div class="item">
+                <div class="icon mr-2"><i class="bi bi-file-earmark"></i></div>
+                <div class="title">Bookings</div>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="main">
+        <nav>
+          <div id="toggler">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+          </div>
+
+          <div class="nav-right">
+            <div class="nav-items">
+              <div class="nav-item">
+                <div class="item">
+                  <div class="title">
+                    <p class="m-0 text text-muted">
+                      Hi {{request.user.username}}! <small> &#9660;</small>
+                    </p>
+                    <p class="my-0 mr-3 text text-right">
+                      {% if request.user.is_staff %} Admin {% else %} User {% endif %}
+                    </p>
+                  </div>
+                  <div class="icon ml-1">
+                    <img
+                      class="img-profile"
+                      src="{% static 'images/avatar.png' %}"
+                      height="30"
+                    />
+                  </div>
+                </div>
+
+                <div class="drop-down">
+                  <div class="body">
+                    <a href="">
+                      <div class="drop-item">
+                        <div class="icon mr-2">
+                          <i class="text text-primary bi bi-people"></i>
+                        </div>
+                        <div class="title">My Profile</div>
+                      </div>
+                    </a>
+
+                    <a href="{% url 'account:logout' %}">
+                      <div class="drop-item">
+                        <div class="icon mr-2"><i class="bi bi-power"></i></div>
+                        <div class="title">Log Out</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="nav-item">
+                <div class="item">
+                  <div class="icon ml-1">
+                    <i class="bi bi-bell"></i>
+                    <strong class="m-0 notification-badge badge"
+                      >{{request.notifications.count}}</strong
+                    >
+                  </div>
+                </div>
+
+                <div class="drop-down">
+                  <div class="p-3 bg-warning">Notifications</div>
+                  {% if request.notifications %}
+                  <div class="body">
+                    {% for notification in request.notifications %}
+                    <a href="" title="Mark as read.">
+                      <div class="drop-item d-flex justify-content-between">
+                        <div class="icon mr-2"><i class="bi bi-bell"></i></div>
+                        <div class="title">
+                          {{notification.message}} 
+                        </div>
+                        <a href="{% url 'dashboard:mark_notification_as_read' notification.id %}">
+                        <div class="icon mr-2"><i class="bi bi-eye"></i></div>
+                      </a>
+                      </div>
+                    </a>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <main id="content">
+          <!-- Page content goes here. -->
+          {% block content %} {% endblock %}
+
+          <footer class="mt-5">
+            <p>© Copyrights JetX 2021. All rights reserved.</p>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="{% static 'js/dashboard.js' %}"></script>
+    <script src="{% static 'js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+
+    <script src="{% static 'js/charts_init.js' %}"></script>
+    <script src="{% static 'js/table_init.js' %}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

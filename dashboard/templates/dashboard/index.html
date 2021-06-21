@@ -1,0 +1,138 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block active_sidebar %}dashboard{% endblock %}
+
+
+{% block content %}
+<!-- Admin Dashboard -->
+<h4>Admin Dashboard</h4>
+<div class="link-nav">
+    <a href="">Home &ThinSpace;</a>
+    <a>> Admin</a>
+</div>
+<br>
+
+<!-- Quick Statistics -->
+<div class="stat-container">
+    <div class="bg-white d-flex justify-content-between p-4">
+        <div class="">
+            <div class="stat-icon bg-success-light">
+                <i class="text text-success bi bi-diagram-2"></i>
+            </div>
+        </div>
+        <div>
+            <p class="text text-muted text-right">Buses</p>
+            <p class="text text-right"><strong>{{buses.count}}</strong></p>
+        </div>
+    </div>
+
+    <div class="bg-white d-flex justify-content-between p-4">
+        <div class="">
+            <div class="stat-icon bg-warning-light">
+                <i class="text text-warning bi bi-house"></i>
+            </div>
+        </div>
+        <div>
+            <p class="text text-muted text-right">Locations</p>
+            <p class="text text-right"><strong>{{locations.count}}</strong></p>
+        </div>
+    </div>
+
+    <div class="bg-white d-flex justify-content-between p-4">
+        <div class="">
+            <div class="stat-icon bg-primary-light">
+                <i class="text text-primary bi bi-people"></i>
+            </div>
+        </div>
+        <div>
+            <p class="text text-muted text-right">Bookings</p>
+            <p class="text text-right"><strong>{{bookings.count}}</strong></p>
+        </div>
+    </div>
+
+    <div class="bg-white d-flex justify-content-between p-4">
+        <div class="">
+            <div class="stat-icon bg-danger-light">
+                <i class="text text-danger bi bi-building"></i>
+            </div>
+        </div>
+        <div>
+            <p class="text text-muted text-right">Users</p>
+            <p class="text text-right"><strong>{{users.count}}</strong></p>
+        </div>
+    </div>
+</div>
+
+<section class="d-flex flex-wrap my-5 justify-content-between">
+    <!-- Notificatons -->
+    <div class="bg-white notification-item col-xs-11 col-sm-11 col-md-4 p-2 rounded m-1">
+        <header class="p-2 d-flex justify-content-between">
+            <h5><i class="bi bi-bell"></i> Notificatons</h5>
+
+            <div class="dropdown">
+                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="bi bi-three-dots"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href=""><i class="bi bi-arrow-repeat"></i> Refresh</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Items -->
+        {% for notification in notifications %}
+        <article>
+            <span class="badge badge-primary border rounded">{{notification.created_at}}</span>
+            <div class="container">
+                {{notification.message}}
+                <p class="text text-muted"><i style="font-family: cursive;">By {{notification.created_by.username}}</i></p>
+            </div>
+            <hr>
+        </article>
+        {% endfor %}
+
+    </div>
+
+    <!-- Student & Teacher Ratio -->
+    <div class="bg-white notification-item col-xs-11 col-sm-11 col-md-3 p-2 rounded m-1">
+        <header class="p-2 d-flex justify-content-between">
+            <h6><i class="bi bi-bar-chart-line"></i> Locations & Buses</h6>
+
+            <div class="dropdown">
+                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="bi bi-three-dots"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href=""><i class="bi bi-arrow-repeat"></i> Refresh</a>
+                </div>
+            </div>
+        </header>
+        <canvas id="myChart" width="300" height="300" data-values="{{locations.count}},{{buses.count}}"></canvas>
+    </div>
+
+
+    <!-- About -->
+    <div class="bg-white notification-item col-xs-11 col-sm-11 col-md-4 p-2 rounded m-1">
+        <header class="p-2 d-flex justify-content-between">
+            <h5><i class="bi bi-truck"></i> Welcome to JetX</h5>
+
+            <div class="dropdown">
+                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="bi bi-three-dots"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href=""><i class="bi bi-arrow-repeat"></i> Refresh</a>
+                </div>
+            </div>
+        </header>
+
+        <article class="container">
+            Created by Group 11
+        </article>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'account/base_template.html' %} {% block content %}
+
+<div class="m-3">
+  <h2 class="text-center text-white">Login to Continue</h2>
+</div>
+<div class="mt-4 flex justify-center">
+  <div class="sm:w-10/12 md:w-4/12 bg-white p-6 rounded-lg">
+    <h3 class="mb-3 text text-center">Enter your credentials</h3>
+
+    {% if request.message %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <strong>Info: </strong> {{request.message}}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+
+    {% if error_message %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Error: </strong> {{error_message}}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %}
+
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          class="form-control"
+          value="{{username}}"
+          required
+        />
+
+        <div class="text-red-500 mt-2 text-sm"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+          class="form-control"
+          value=""
+          required
+        />
+      </div>
+
+      <div class="form-group text-sm">
+        <label for="remember_me">Remember me</label>
+        <input
+          type="checkbox"
+          name="remember_me"
+          id="remember_me"
+          {% if remember_me %}
+          checked
+          {% endif %}
+        />
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="btn btn-primary text-white px-4 rounded font-medium w-full"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="theme-trans">
+  <p class="my-3 text text-center">
+    New here?
+    <a class="text-blue-500" href="{% url 'account:register' %}">Regiser</a>
+    now.
+  </p>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}Bus{% endblock %}
+{% block active_sidebar %}buses{% endblock %}
+
+
+{% block content %}
+<h4>Bus</h4>
+<div class="link-nav">
+    <a href="{% url 'dashboard:index' %}">Home &ThinSpace;</a>
+    <a>>Store Bus Info</a>
+</div>
+<br>
+
+<div class="bg-white col-md-12 rounded p-1">
+    <header class="p-2 d-flex justify-content-between">
+        <h6><i class="bi bi-list-stars"></i> Store Bus Info</h6>
+    </header>
+
+    <form action="{% url 'dashboard:store_bus' %}" class="needs-validation" method="POST" novalidate>
+        {% if error_message %}
+        <div class="col-md-7 mx-auto alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> {{error_message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        {% csrf_token %}
+
+        <input type="hidden" name="id" value="{{id}}">
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="name">Bus Name</label>
+                    <input value="{{name}}" type="text" id="name" class="form-control"
+                        placeholder="E.g., VIP Bus" name="name" pattern="([A-Za-z0-9]{1,}\s?){1,}" required>
+                    <div class="invalid-feedback">Bus name is required.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="number">Bus number</label>
+                    <input value="{{number}}" type="text" id="number" class="form-control"
+                        placeholder="E.g., VR 1938 21" name="number" required>
+                    <div class="invalid-feedback">Bus number is required.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="capacity">Capacity</label>
+                    <input value="{{capacity}}" type="text" id="capacity" class="form-control"
+                        placeholder="E.g., 20" name="capacity" required>
+                    <div class="invalid-feedback">Capacity if required.</div>
+                </div>
+            </div>
+        </div>
+
+
+        <p class="text text-right">
+            <button class="btn btn-info" type="submit">Submit</button>
+        </p>
+    </form>
+</div>
+{% endblock %}
+
+<!-- Validation script -->
+{% block scripts %}
+{% load static %}
+<script src="{% static 'js/student_app.js' %}"></script>
+
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+{% endblock %}

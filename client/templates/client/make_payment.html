@@ -1,0 +1,59 @@
+{% extends 'client/base_template.html' %} {% block content %}
+<br />
+<br />
+<div class="m-3">
+  <h1 class="text-center text-white">NEED A RIDE?</h1>
+  <h3 class="text-center text-white">Welcome to JetX!</h3>
+</div>
+
+<div class="mt-4 flex justify-center" id="">
+  <div class="sm:w-10/12 md:w-4/12 bg-glass p-6 mx-3 rounded-lg">
+    <form action="{% url 'client:payment_info' schedule.id %}" method="post">
+        {% csrf_token %}      
+    <input name="schedule_id" type="hidden" value="{{schedule.id}}" />
+      <div class="mb-4">
+        <label for="payment_method" class="">Payment Method</label>
+        <select
+          name="payment_method"
+          id="payment_method"
+          class="bg-glass border-2 w-full p-3 rounded-lg"
+          required
+        >
+          <option value="">----- Select ----</option>
+          <option value="MTN Mobile Mobile">MTN Mobile Mobile</option>
+          <option value="Vodafone Cash">Vodafone Cash</option>
+          <option value="AirtelTigo Money">AirtelTigo Money</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label for="number">Mobile Number</label>
+        <input
+          type="text"
+          name="number"
+          id="number"
+          placeholder="e.g 0249626071"
+          title="Ten digits with a leading 0."
+          class="bg-glass border-2 w-full p-3 rounded-lg"
+          value=""
+          pattern="[0-9]{10}"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <button
+          type="submit"
+          class="bg-purple-700 text-white px-4 py-3 rounded font-large w-full"
+        >
+          Make Payment
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<br />
+<br />
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'client/base_template.html' %}
+
+{% block content %}
+<br>
+<br>
+<div class="m-3">
+    <h1 class="text-center text-white">NEED A RIDE?</h1>
+    <h3 class="text-center text-white">Welcome to JetX!</h3>
+</div>
+
+<div class="mt-4 flex justify-center" id="">
+    <div class="sm:w-11/12 md:w-4/12 bg-glass p-6 rounded-lg">                    
+        <form action="{% url 'client:get_schedules' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="source_id" class="">Pick Up Location</label>
+                <select name="source_id" id="source_id"
+                    class="bg-glass border-2 w-full p-3 rounded-lg"
+                    required>
+                    <option value="">----- Select ----</option>
+                    {% for location in locations %}
+                        <option value="{{location.id}}">{{location.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="destination_id" class="">Drop Location</label>
+                <select name="destination_id" id="destination_id"
+                class="bg-glass border-2 w-full p-3 rounded-lg"
+                required>
+                    <option value="">----- Select ----</option>
+                        {% for location in locations %}
+                        <option value="{{location.id}}">{{location.name}}</option>
+                        {% endfor %}                
+                    </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="departure_date" class="">Date</label>
+                <input type="date" 
+                    name="departure_date" 
+                    id="departure_date"
+                    class="js-update-date min-date-today bg-glass border-2 w-full p-3 rounded-lg" required>
+            </div>
+
+            <div>
+                <button type="submit"
+                    class="bg-purple-700 text-white px-4 py-3 rounded font-medium w-full">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+<br>
+
+{% endblock %}

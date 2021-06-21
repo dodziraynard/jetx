@@ -1,0 +1,34 @@
+{% extends 'client/base_template.html' %} {% block content %}
+<br />
+<br />
+<div class="m-3">
+  <h1 class="text-center text-white">NEED A RIDE?</h1>
+  <h3 class="text-center text-white">Welcome to JetX!</h3>
+</div>
+
+<div class="mt-4 flex justify-center" id="">
+  <div class="sm:w-11/12 md:w-4/12 bg-glass p-6 rounded-lg">
+    <h5 class="text-purple-100">
+      Locations: From {{schedule.source.name}} to {{schedule.destination.name}}
+    </h5>
+    <h5 class="text-purple-100">Departure Time: {{schedule.departure_time}}</h5>
+    <h5 class="text-purple-100">Price: GHC {{schedule.price}}</h5>
+    <h5 class="text-purple-100">Bus Capacity: {{schedule.bus.capacity}}</h5>
+
+    <div class="mt-5">
+      <a href="{% url 'client:make_payment' schedule.id %}">
+        <button
+          type="submit"
+          class="bg-purple-700 text-white px-4 py-3 rounded font-large w-full"
+        >
+          Make Payment
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<br />
+<br />
+
+{% endblock %}
