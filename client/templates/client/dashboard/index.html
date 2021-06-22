@@ -35,7 +35,7 @@
         </div>
         <div>
             <p class="text text-muted text-right">Bookings</p>
-            <p class="text text-right"><strong>{{bookings.count}}</strong></p>
+            <p class="text text-right"><strong>{{request.user.bookings.count}}</strong></p>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
         </div>
         <div>
             <p class="text text-muted text-right">Payment History</p>
-            <p class="text text-right"><strong>{{payments.count}}</strong></p>
+            <p class="text text-right"><strong>{{request.user.payments.count}}</strong></p>
         </div>
     </div>
 </div>

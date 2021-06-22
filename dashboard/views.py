@@ -267,7 +267,7 @@ def delete_notification(request, notification_id):
     redirect_url = request.META.get("HTTP_REFERER") or "dashboard:index"
     return redirect(redirect_url)
 
-@staff_only
+@login_required(login_url="account:login")
 def mark_notification_as_read(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id)
     NotificationReading.objects.get_or_create(
