@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 
+# Home dashboard
 @login_required(login_url="account:login")
 def index(request):
     buses = Bus.objects.all()

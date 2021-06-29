@@ -9,14 +9,17 @@ def account_login(request):
     context = {}
 
     if request.method == "POST":
+        # Retrieving posted parameters.
         username = request.POST.get("username")
         password = request.POST.get("password")
         remember_me = True if request.POST.get("remember_me") else False
         user = authenticate(username=username, password=password)
 
+        # If the credentials are correct, a user object will be returned.
         if user:
             login(request, user)
             if remember_me:
+                # Increase the session expiration to 30 days.
                 request.session.set_expiry(86400 * 30)
             user.last_login_date = timezone.now()
             user.save()
@@ -44,6 +47,7 @@ def register(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         
+        # Split fullname into last name and first name.
         last_name = full_name.split()[0]
         first_name = " ".join(full_name.split()[1:])
         

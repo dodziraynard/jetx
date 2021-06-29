@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
-from django.utils.translation import ugettext
 
 
 class Location(models.Model):
@@ -16,7 +15,6 @@ class Bus(models.Model):
     capacity = models.IntegerField()
     number = models.CharField(max_length=20)
     created_at = models.DateTimeField(default=now)
-
 
     def __repr__(self) -> str:
             return self.name
